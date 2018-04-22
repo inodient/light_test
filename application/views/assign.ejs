@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
+	
+	<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+	<meta charset="utf-8">
+	<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+
+	<style>
+
+		body {
+			
+		}
+
+		.content-header {
+			padding: 10px;
+			font-size: 1.25rem;
+			text-align: center;
+			color: white;
+			background-color: #328893;
+		}
+
+		.content-header .row {
+			margin: auto;
+			max-width: 1000px;
+		}
+
+		.content-header .left-nav {
+			padding-left: 0;
+			text-align: left;
+		}
+
+		.content-header .right-nav {
+			padding-right: 0;
+			text-align: right;
+		}
+
+		.content-header a {
+			font-size: 1.25rem;
+			color: white;
+			text-decoration: none;
+		}
+
+		.content-header a:hover {
+			font-weight: 700;
+			text-decoration: none;
+		}		
+
+		.failure-form {
+			max-width: 1000px;
+			margin-left: auto;
+			margin-right: auto;
+			background-color: white;
+			margin-top: 15px;
+		}
+
+		.failure-form .assign-button-group {
+			text-align: right;
+			margin-bottom: 20px;
+		}
+
+		.failure-form .assign-button-group input[type=button] {
+			background-color: #296f79;
+			border: 0;
+			outline: none;
+			color: white;
+			font-size: 1.25rem;
+			font-weight: 700;
+			padding: 8px;
+			border-radius: 0;
+		}
+
+		.failure-form .assign-button-group input[type=button]:hover {
+			background-color: #5b949b;
+		}
+
+		.failure-form table {
+			font-size: 1.1rem;
+		}
+
+		.failure-form table .td-title {
+			width: 20%;
+			vertical-align: middle;
+			text-align: center;
+			font-weight: bold;
+			height: 34px;
+			background-color: #f3f8f8;
+		}
+
+		.failure-form table input {
+			padding: 6px 12px 6px 12px;
+			height: 34px;
+			border: 1px solid lightgray;
+			width: 100%;
+			border-radius: 0 !important;
+			-webkit-appearance: none;
+		}
+
+		.failure-form img {
+			width: 100%;
+		}
+
+		.failure-form textarea {
+			padding: 6px 12px 6px 12px;
+			border: 1px solid lightgray;
+			width: 100%;
+			border-radius: 0 !important;
+			-webkit-appearance: none;
+		}
+
+		footer {
+			padding: 30px;
+			font-size: 1.25rem;
+			text-align: center;
+			color: white;
+			background-color: #328893;
+		}
+		
+	</style>
+
+	<script>
+		$(document).ready( function(){
+			$(document).on( "change", ":file", function(){
+				var input = $(this),
+					numFiles = input.get(0).files ? input.get(0).files.length : 1,
+					label = input.val().replace( /\\/gi, "/").replace( /.*\//gi, '' );
+
+				input.trigger( "fileselect", [numFiles, label] );
+			} );
+
+			$(":file").on( "fileselect", function(event, numFiles, label){
+				var input = $(this).parents( ".input-group" ).find( ":text" ),
+					log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+				if( input.length ){
+					input.val(log);
+					imageUpload();
+				}
+			} );
+
+			function imageUpload(){
+				var data = new FormData();
+				jQuery.each( jQuery("#image-group input[type=file]")[0].files, function(i, file){
+					data.append( "file-"+i, file );
+				}  );
+
+				imageUploadAjax( data )
+				.then( function( result ){
+					alert( "IMAGED UPLOADED..." );
+					$("#failure-image").attr( "src", "/" + result.savedFileName );
+				} )
+				.catch( function(err){
+					alert( err );
+					return;
+				} );
+			}
+
+			function imageUploadAjax( data ){
+				return new Promise( function(resolve, reject){
+					var opt = {
+						type: "POST",
+						url: "/uploadimage",
+						data: data,
+
+						cache: false,
+						contentType: false,
+						processData: false,
+
+						success: function( data ){
+							resolve( data );
+						}
+					}
+
+					$.ajax( opt );
+				} );
+			}
+
+
+
+
+			$("#btn-clear").on( "click", function(){
+				$("#input-model").val("");
+				$("#input-phase").val("");
+				$("#input-serial").val("");
+				$("#failure-image").val("");
+				$("#input-failure").val("");
+			} );
+
+			$("#btn-cancle").on( "click", function(){
+				$(location).attr( "href", "/index" );
+			} );
+
+			$("#btn-submit").on( "click", function(){
+
+				var opt = {
+					type: "POST",
+					url: "/savefailure",
+					data: $("#failure-form").serialize(),
+
+					success: function( data ){
+						alert( "SAVE SUCCEED" );
+					}
+				}
+
+				$.ajax( opt );
+			} );
+
+
+
+		} );
+	</script>
+
+	<title>RGT MOBILE</title>
+</head>
+<body>
+	<div class="content-header">
+		<div class="row">
+			<div class="container-fluid">
+				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 left-nav">
+					<a href="/list">LIST</a>
+				</div>
+				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+					<a href="">ASSIGN</a>
+				</div>
+				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 right-nav">
+					<a href="/logout">LOGOUT</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<form id="failure-form" class="failure-form" name="failure-form" method="post" action="/savefailure
+	">
+		
+		<div class="container-fluid">
+			<table class="table table-responsive table-bordered">
+				<tbody>
+					<tr>
+						<td class="td-title">MODEL</td>
+						<td>
+							<input id="input-model" name="input-model" type="text" />
+						</td>
+					</tr>
+					<tr>
+						<td class="td-title">PHASE</td>
+						<td>
+							<input id="input-phase" name="input-phase" type="text" />
+						</td>
+					</tr>
+					<tr>
+						<td class="td-title">SERIAL</td>
+						<td>
+							<input id="input-serial" name="input-serial" type="text" />
+						</td>
+					</tr>
+					<tr>
+						<td class="td-title">IMAGE</td>
+						<td>
+							<form id="uploadForm" class="form-inline" encrypt="multipart/form-data">
+								<div class="input-group">
+									<input type="text" name="input-imagename" class="form-control" placeholder="File Name" readonly>
+									<label class="input-group-btn">
+					                    <span id="image-group" class="btn btn-default">
+					                        Submit <input type="file" style="display: none;" name="uploadFileForm" id="uploadFileForm" multiple>
+					                    </span>
+					                </label>
+									<!-- <button class="btn btn-default" type="button">
+										<i class="glyphicon glyphicon-search"></i>
+									</button> -->
+								</div>
+							</form>
+						</td>
+					</tr>
+					<tr>
+						<td colspan=2>
+							<img src="/default.jpg" id="failure-image">
+						</td>
+					</tr>
+					<tr>
+						<td colspan=2 class="td-title">FAILURE CONTENT</td>
+					</tr>
+					<tr>
+						<td colspan=2>
+							<textarea rows=10 id="input-failure" name="input-failure"></textarea>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="container-fluid assign-button-group">
+			<input type="button" value="CLEAR" id="btn-clear" />
+			<input type="button" value="CANCLE" id="btn-cancle" />
+			<input type="button" value="SUBMIT" id="btn-submit"/>
+		</div>
+	</form>
+
+	<footer>
+		<p>
+			Copyright(c) 2018 Doosan I&C<br>
+			Beta-Test Version - v.0.0.1
+		</p>
+	</footer>
+	
+</body>
+</html>

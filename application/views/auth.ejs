@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+	<h1>WELCOME!!</h1>
+
+	<h3><%- message %></h3>
+
+	<% if( status != "S"){ %>
+
+	<form method="post" action="/authcheck">
+		<span>ID</span>
+		<input type="text" name="userid" id="userid" />
+		<span>PASSWORD</span>
+		<input type="password" name="password" id="password" />
+		<input type="submit">
+	</form>
+
+	<% } %>
+
+</body>
+</html>

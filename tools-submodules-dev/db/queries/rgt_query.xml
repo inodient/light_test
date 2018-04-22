@@ -1,0 +1,102 @@
+<?xml version='1.0'?>
+<queries>
+  <query id='getUserInfo'>
+    <![CDATA[
+      SELECT BUKRS
+            ,EMP_NO
+            ,BUTXT
+            ,DEP_BG_CODE
+            ,DEP_BG_NAME
+            ,DEP_CODE
+            ,DEP_NAME
+            ,EMP_NAME
+            ,EMP_NM_ENG
+            ,EMP_STAT
+            ,ENT_DATE
+            ,RET_DATE
+            ,RSPT_NAME
+            ,DEP_HEAD
+            ,POS_NAME
+            ,TELF1
+            ,TELF3
+            ,TELF2
+            ,SMTP_ADDR
+            ,ADACCOUNT
+            ,CPUDT
+            ,COM_ORG_ID
+            ,ORG_NM_ENG
+        FROM ZCCT1010
+       WHERE EMP_NO = #EMP_NO#
+    ]]>
+  </query>
+  <query id='insertImageInfo'>
+    <![CDATA[
+      INSERT INTO TB_RGT_MOBILE_IMAGE
+             (originalFileName
+             ,savedFileName
+             ,savedPath
+             ,create_date)
+       VALUES
+             ( #ORGFILE#, #SAVEDFILE#, #PATH#, #DATE# )
+    ]]>
+  </query>
+  <query id='insertFailure'>
+    <![CDATA[
+      insert into TB_RGT_MOBILE_FAILURE
+        ( model_id, image_id, failure, create_date )
+      values( 
+        (select id from TB_RGT_MOBILE_MODEL where name=#MODEL# ), 
+        (select max(id) from TB_RGT_MOBILE_IMAGE where originalFileName like #IMAGE#), 
+        #FAILURE#, 
+        #DATE# 
+      )
+    ]]>
+  </query>
+  <query id='getAccessLog'>
+    <![CDATA[
+      
+      SELECT [id]
+            ,[model_id]
+            ,[image_id]
+            ,[failure]
+            ,[create_date]
+        FROM [dbo].[TB_RGT_MOBILE_FAILURE]
+
+      SELECT [id]
+            ,[originalFileName]
+            ,[savedFileName]
+            ,[savedPath]
+            ,[create_date]
+        FROM [dbo].[TB_RGT_MOBILE_IMAGE]
+
+      SELECT [id]
+            ,[code]
+            ,[name]
+            ,[phase]
+            ,[serial]
+        FROM [dbo].[TB_RGT_MOBILE_MOBILE]
+
+      SELECT [id]
+            ,[code]
+            ,[name]
+            ,[phase]
+            ,[serial]
+        FROM [dbo].[TB_RGT_MOBILE_MODEL]
+
+
+
+
+
+
+    ]]>
+  </query>
+  <query id='insertAccessLog'>
+    insert into connectionInfo values ( ?, ?, ?, ?, ?, ? )
+  </query>
+  <query id='updateAccessLog'>
+    update connectionInfo set userId = ? where param = ?
+  </query>
+  <query id='deleteAccessLog'>
+    delete from connectionInfo where param like ?
+  </query>
+</queries>
