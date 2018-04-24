@@ -2,10 +2,12 @@ exports.getUserInfo = function( username, connection ){
 	return new Promise( function(resolve, reject){
 
 		var params = [];
-		var queryid 
-		params.push( {"EMP_NO":'i0198101'} );
+		var queryid = "getUserInfo";
+		params.push( {"EMP_NO": username.replace( /dsg\\/gi, "" ) } );
 
-		mssqlHandler.executeQuery( "getUserInfo", params, connection.mssqlConnection )
+		logger.debug( "username :", username.replace( /dsg\\/gi, "" ) );
+
+		mssqlHandler.executeQuery( queryid, params, connection.mssqlConnection )
 		.then( function(queryResults){
 			resolve( queryResults );
 		} )

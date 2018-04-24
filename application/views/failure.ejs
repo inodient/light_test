@@ -19,6 +19,7 @@
 			
 		}
 
+
 		.content-header {
 			padding: 10px;
 			font-size: 1.25rem;
@@ -58,7 +59,7 @@
 			margin-left: auto;
 			margin-right: auto;
 			background-color: white;
-			margin-top: 15px;
+			margin-top: 80px;
 		}
 
 		.failure-form .assign-button-group {
@@ -90,8 +91,16 @@
 			vertical-align: middle;
 			text-align: center;
 			font-weight: bold;
+			padding: 6px 12px 6px 12px;
 			height: 34px;
 			background-color: #f3f8f8;
+		}
+		.failure-form table .td-content {
+			width: 30%;
+			vertical-align: middle;
+			text-align: center;
+			font-weight: bold;
+			height: 34px;
 		}
 
 		.failure-form table input {
@@ -101,6 +110,14 @@
 			width: 100%;
 			border-radius: 0 !important;
 			-webkit-appearance: none;
+		}
+
+		.failure-form table .model-selector {
+			padding: 6px 12px 6px 12px;
+			height: 34px;
+			border: 1px solid lightgray;
+			width: 100%;
+			border-radius: 0 !important;
 		}
 
 		.failure-form img {
@@ -122,162 +139,140 @@
 			color: white;
 			background-color: #328893;
 		}
-		
+
+		.navbar-toggle {
+			border: 1px solid #328893;
+			padding: 4px;
+			margin-right: 0px;
+		}
+
+		.icon-bar {
+			background-color: white;
+		}
+
+		.navbar-item a {
+			text-decoration: none;
+			color: #04313a;
+		}
+
+		.navbar-item.active {
+			font-weight: 800;
+		}
+
+	
 	</style>
 
 	<script>
 		$(document).ready( function(){
-			$(document).on( "change", ":file", function(){
-				var input = $(this),
-					numFiles = input.get(0).files ? input.get(0).files.length : 1,
-					label = input.val().replace( /\\/gi, "/").replace( /.*\//gi, '' );
-
-				input.trigger( "fileselect", [numFiles, label] );
+			$("#btn-list").on( "click", function(){
+				$(location).attr( "href", "/list" );
 			} );
 
-			$(":file").on( "fileselect", function(event, numFiles, label){
-				var input = $(this).parents( ".input-group" ).find( ":text" ),
-					log = numFiles > 1 ? numFiles + ' files selected' : label;
-
-				if( input.length ){
-					input.val(log);
-					imageUpload();
-				}
-			} );
-
-			function imageUpload(){
-				var data = new FormData();
-				jQuery.each( jQuery("#image-group input[type=file]")[0].files, function(i, file){
-					data.append( "file-"+i, file );
-				}  );
-
-				imageUploadAjax( data )
-				.then( function( result ){
-					alert( "IMAGED UPLOADED..." );
-					$("#failure-image").attr( "src", "/" + result.savedFileName );
-				} )
-				.catch( function(err){
-					alert( err );
-					return;
-				} );
-			}
-
-			function imageUploadAjax( data ){
-				return new Promise( function(resolve, reject){
-					var opt = {
-						type: "POST",
-						url: "/uploadimage",
-						data: data,
-
-						cache: false,
-						contentType: false,
-						processData: false,
-
-						success: function( data ){
-							resolve( data );
-						}
-					}
-
-					$.ajax( opt );
-				} );
-			}
-
-
-
-
-			$("#btn-clear").on( "click", function(){
-				$("#input-model").val("");
-				$("#input-phase").val("");
-				$("#input-serial").val("");
-				$("#failure-image").val("");
-				$("#input-failure").val("");
-			} );
-
-			$("#btn-cancle").on( "click", function(){
-				$(location).attr( "href", "/index" );
-			} );
-
-			$("#btn-submit").on( "click", function(){
-				$("#failure-form").submit();
-			} );
-
-
-
+			$("#sign-out").on( "click", function(){
+		    	$(location).attr( "href", "/" );
+		    } );
 		} );
 	</script>
 
 	<title>RGT MOBILE</title>
 </head>
 <body>
-	<div class="content-header">
+	<!-- <div class="content-header">
 		<div class="row">
 			<div class="container-fluid">
 				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 left-nav">
-					<a href="/list">LIST</a>
+					<a href="/list"><span class="glyphicon glyphicon-menu-left	
+"></span>&nbsp;&nbsp;LIST</a>
 				</div>
 				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-					<a href="">ASSIGN</a>
+					<a href="">FAILURE</a>
 				</div>
 				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 right-nav">
-					<a href="/logout">LOGOUT</a>
+					<a href="/">LOGOUT&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right	
+"></span></a>
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
-	<form id="failure-form" class="failure-form" name="failure-form" method="post" action="/content/last
+	<nav class="navbar navbar-fixed-top" style="background-color: #328893">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" style="float: left; margin-left: 8px">
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span> 
+	      </button>
+	      <button type="button" class="navbar-toggle" id="sign-out" style="color: white; float:right; margin-right: 8px">
+            Sign Out&nbsp;&nbsp;<span class="glyphicon glyphicon-log-out"></span>
+    		</button>
+	    </div>
+	    <div class="collapse navbar-collapse" id="myNavbar" style="background-color: white; color: #04313a">
+	      <ul class="nav navbar-nav">
+	        <li class="navbar-item"><a href="/list" class="site-nav-menu" id="1" name="List" data-href="/list">List</a></li>
+          	<li class="navbar-item"><a href="/assign" class="site-nav-menu" id="1" name="Assign Failure" data-href="/assign">Assign Failure</a></li>
+          	<li class="navbar-item"><a href="/machine" class="site-nav-menu" id="1" name="Machine Info" data-href="/machine">Machine Info</a></li>
+	      </ul>
+	      <ul class="nav navbar-nav navbar-right">
+	      	<li class="navbar-item"><a href="/setting" class="site-nav-menu" id="1" name="Setting" data-href="/setting">Setting</a></li>
+	        <!-- <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li> -->
+	      </ul>
+	    </div>
+	  </div>
+	</nav>
+
+	<form id="failure-form" class="failure-form" name="failure-form" method="post" action="/savefailure
 	">
 		
 		<div class="container-fluid">
-			<table class="table table-responsive table-bordered">
+			<table class="table table-responsive table-bordered" style="margin-bottom: 35px">
 				<tbody>
 					<tr>
-						<td class="td-title">MODEL</td>
-						<td>
-							<input id="input-model" type="text" />
+						<td class="td-title">NAME</td>
+						<td colspan=3 class="td-content">
+							<span><%- failure.NAME %></span>
+						</td>
+					</tr>
+
+					<tr>
+						<td class="td-title">ID</td>
+						<td class="td-content">
+							<span><%- failure.NAME %></span>
+						</td>
+						<td class="td-title">PRJ NO</td>
+						<td class="td-content">
+							<span><%- failure.PRJ %></span>
 						</td>
 					</tr>
 					<tr>
 						<td class="td-title">PHASE</td>
-						<td>
-							<input id="input-phase" type="text" />
+						<td class="td-content">
+							<span><%- failure.PHASE %></span>
 						</td>
-					</tr>
-					<tr>
 						<td class="td-title">SERIAL</td>
-						<td>
-							<input id="input-serial" type="text" />
+						<td class="td-content">
+							<span><%- failure.SERIAL %></span>
 						</td>
 					</tr>
+				</tbody>
+			</table>
+
+			<table class="table table-responsive table-bordered">
+				<tbody>
 					<tr>
 						<td class="td-title">IMAGE</td>
+					</tr>
+					<tr>
 						<td>
-							<form id="uploadForm" class="form-inline" encrypt="multipart/form-data">
-								<div class="input-group">
-									<input type="text" class="form-control" placeholder="File Name" readonly>
-									<label class="input-group-btn">
-					                    <span id="image-group" class="btn btn-default">
-					                        Submit <input type="file" style="display: none;" name="uploadFileForm" multiple>
-					                    </span>
-					                </label>
-									<!-- <button class="btn btn-default" type="button">
-										<i class="glyphicon glyphicon-search"></i>
-									</button> -->
-								</div>
-							</form>
+							<img src="<%- '/' + failure.SAVEDFILENAME %>" id="failure-image">
 						</td>
 					</tr>
 					<tr>
-						<td colspan=2>
-							<img src="/default.jpg" id="failure-image">
-						</td>
+						<td class="td-title">FAILURE CONTENT</td>
 					</tr>
 					<tr>
-						<td colspan=2 class="td-title">FAILURE CONTENT</td>
-					</tr>
-					<tr>
-						<td colspan=2>
-							<textarea rows=10 id="input-failure"></textarea>
+						<td>
+							<span><%- failure.FAILURE %></span>
 						</td>
 					</tr>
 				</tbody>
@@ -285,15 +280,13 @@
 		</div>
 
 		<div class="container-fluid assign-button-group">
-			<input type="button" value="CLEAR" id="btn-clear" />
-			<input type="button" value="CANCLE" id="btn-cancle" />
-			<input type="button" value="SUBMIT" id="btn-submit"/>
+			<input style="width: 100%" type="button" value="BACK TO LIST" id="btn-list" />
 		</div>
 	</form>
 
 	<footer>
 		<p>
-			Copyright(c) 2018 Doosan I&C<br>
+			Copyright(c) 2018 Doosan Information Communication<br>
 			Beta-Test Version - v.0.0.1
 		</p>
 	</footer>

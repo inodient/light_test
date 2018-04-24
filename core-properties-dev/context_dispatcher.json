@@ -1,54 +1,6 @@
 {
     "GET": [
         {
-            "id": "index",
-            "path": "/index",
-            "controllerJS": "controller_basic.js",
-            "controlFunction": "control",
-            "viewPath": "",
-            "view": "index.ejs"
-        },
-        {
-            "id": "_ajaxRequest",
-            "path": "/ajaxRequest",
-            "controllerJS": "controller_ajax.js",
-            "controlFunction": "control",
-            "viewPath": "",
-            "view": "index.ejs"
-        },
-        {
-            "id": "_setCookie",
-            "path": "/setCookie",
-            "controllerJS": "controller_cookie_session.js",
-            "controlFunction": "control",
-            "viewPath": "",
-            "view": "index.ejs"
-        },
-        {
-            "id": "_setSession",
-            "path": "/setSession",
-            "controllerJS": "controller_cookie_session.js",
-            "controlFunction": "control",
-            "viewPath": "",
-            "view": "index.ejs"
-        },
-        {
-            "id": "_getData",
-            "path": "/getData",
-            "controllerJS": "controller_db.js",
-            "controlFunction": "control",
-            "viewPath": "",
-            "view": "index.ejs"
-        },
-        {
-            "id": "_download",
-            "path": "/download",
-            "controllerJS": "controller_file.js",
-            "controlFunction": "control_download",
-            "viewPath": "",
-            "view": "index.ejs"
-        },
-        {
             "id": "auth",
             "path": "/auth",
             "controllerJS": "controller_auth.js",
@@ -67,44 +19,36 @@
         {
             "id": "assign",
             "path": "/assign",
-            "controllerJS": "controller_basic.js",
-            "controlFunction": "control",
+            "controllerJS": "controller_failure.js",
+            "controlFunction": "control_load",
             "viewPath": "",
             "view": "assign.ejs"    
+        },
+        {
+            "id": "list",
+            "path": "/list",
+            "controllerJS": "controller_failure.js",
+            "controlFunction": "control_list_failure",
+            "viewPath": "",
+            "view": "list.ejs"
+        },
+        {
+            "id": "failure",
+            "path": "/failure/:id",
+            "controllerJS": "controller_failure.js",
+            "controlFunction": "control_view_failure",
+            "viewPath": "",
+            "view": "failure.ejs"
         }
     ],
     "POST": [
         {
-            "id": "_indexPost",
-            "path": "/",
-            "controllerJS": "controller_post.js",
-            "controlFunction": "control",
-            "viewPath": "",
-            "view": "index.ejs"
-        },
-        {
-            "id": "_upload",
-            "path": "/upload",
-            "controllerJS": "controller_file.js",
-            "controlFunction": "control",
-            "viewPath": "",
-            "view": "index.ejs"
-        },
-        {
-            "id": "_ajaxRequest",
-            "path": "/ajaxRequest2",
-            "controllerJS": "controller_ajax.js",
-            "controlFunction": "control",
-            "viewPath": "",
-            "view": "index.ejs"
-        },
-        {
-            "id": "index",
-            "path": "/index",
+            "id": "list",
+            "path": "/list",
             "controllerJS": "controller_auth.js",
             "controlFunction": "control_auth",
             "viewPath": "",
-            "view": "main.ejs"
+            "view": "list.ejs"
         },
         {
             "id": "uploadimage",

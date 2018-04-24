@@ -28,8 +28,8 @@
 		}
 
 		.login-info {
-			/*margin: auto;*/
-			
+			margin: auto;
+			height: 100%;
 		}
 
 		.system-title {
@@ -115,14 +115,14 @@
 			
 
 
-			$(".login-info").css( "margin-top", ( ( $(".login-form").height() - $(".login-info").height() ) / 2 ) + "px" );
+			var marginTop = ( ( $(".login-form").height() - $(".login-info").height() ) / 2 ) - 55;
+			$(".login-info").css( "margin-top", marginTop + "px" );
 
 
 
 
 
 			$(".login-form").submit( function(){
-				alert( "SUBMIT" );
 			} );
 		} );
 	</script>
@@ -130,7 +130,7 @@
 	<title>RGT MOBILE</title>
 </head>
 <body>
-	<form id="login-form" class="login-form" name="login-form" method="post" action="/index">
+	<form id="login-form" class="login-form" name="login-form" method="post" action="/list">
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-lg-4 col-md-4">

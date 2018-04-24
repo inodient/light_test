@@ -2,33 +2,60 @@
 <queries>
   <query id='getUserInfo'>
     <![CDATA[
-      SELECT BUKRS
-            ,EMP_NO
-            ,BUTXT
-            ,DEP_BG_CODE
-            ,DEP_BG_NAME
-            ,DEP_CODE
-            ,DEP_NAME
-            ,EMP_NAME
-            ,EMP_NM_ENG
-            ,EMP_STAT
-            ,ENT_DATE
-            ,RET_DATE
-            ,RSPT_NAME
-            ,DEP_HEAD
-            ,POS_NAME
-            ,TELF1
-            ,TELF3
-            ,TELF2
-            ,SMTP_ADDR
-            ,ADACCOUNT
-            ,CPUDT
-            ,COM_ORG_ID
-            ,ORG_NM_ENG
-        FROM ZCCT1010
-       WHERE EMP_NO = #EMP_NO#
+      SELECT USER_ID
+            ,USER_NM
+            ,LANG_CD
+            ,EN_FIRST_NM
+            ,EN_LAST_NM
+            ,EMAIL
+            ,DEPT_CD
+            ,DEPT_NM
+            ,TITLE_CD
+            ,TITLE
+            ,DUTY_CD
+            ,DUTY_NM
+            ,COMPANY_CD
+            ,COMPANY_NM
+            ,COM_CD
+            ,COM_PART
+            ,OFFICE_PHONE_NO
+            ,MOBILE_NO
+            ,JOB_GROUP_CD
+            ,EMPLOYEE_NO
+            ,UPDATE_STATE
+            ,MAIN_JOB
+            ,BIRTHDAY
+            ,DEFAULT_BG_CD
+            ,LOCK_YN
+            ,INTERFACE_YN
+            ,CHINESE_NM
+            ,CREATION_USER_ID
+            ,CREATION_DATE
+            ,LAST_UPDATE_USER_ID
+            ,LAST_UPDATE_DATE
+            ,SUBCONTRACTOR_OID
+            ,USE_YN
+            ,EXTRNL_USER_PSWD
+            ,BIRTHDAY_SL
+        FROM TB_COM_USER
+        WHERE USER_ID = #EMP_NO#
     ]]>
   </query>
+  
+  <query id="getModelList">
+    <![CDATA[
+      select top 20 
+             A.MODEL_ID AS ID, 
+             A.MODEL_NM AS NAME, 
+             A.PROJECT_NO AS PRJ, 
+             B.PLAN_STEP AS PHASE, 
+             B.PLAN_SERIAL AS SERIAL 
+          from TB_RGT_MODEL_MST A, TB_RGT_PLAN B
+         where A.MODEL_ID = B.MODEL_ID
+         order by A.CREATION_DATE desc;
+    ]]>
+  </query>
+
   <query id='insertImageInfo'>
     <![CDATA[
       INSERT INTO TB_RGT_MOBILE_IMAGE
@@ -44,14 +71,81 @@
     <![CDATA[
       insert into TB_RGT_MOBILE_FAILURE
         ( model_id, image_id, failure, create_date )
-      values( 
-        (select id from TB_RGT_MOBILE_MODEL where name=#MODEL# ), 
-        (select max(id) from TB_RGT_MOBILE_IMAGE where originalFileName like #IMAGE#), 
-        #FAILURE#, 
-        #DATE# 
-      )
+      values
+        ( #MODEL#, 
+          (select max(id) from TB_RGT_MOBILE_IMAGE where originalFileName like #IMAGE#), 
+          #FAILURE#, 
+          #DATE# 
+        )
     ]]>
   </query>
+
+
+  <query id='getFailureList'>
+    <![CDATA[
+      select C.ID
+            ,C.FAILURE
+            ,C.CREATE_DATE
+            ,A.MODEL_ID AS MODEL_ID 
+            ,A.MODEL_NM AS NAME 
+            ,A.PROJECT_NO AS PRJ 
+            ,B.PLAN_STEP AS PHASE 
+            ,B.PLAN_SERIAL AS SERIAL 
+            ,D.ORIGINALFILENAME
+            ,D.SAVEDFILENAME
+            ,D.SAVEDPATH
+        from TB_RGT_MODEL_MST A, TB_RGT_PLAN B, TB_RGT_MOBILE_FAILURE C, TB_RGT_MOBILE_IMAGE D
+       where C.MODEL_ID = A.MODEL_ID 
+         and A.MODEL_ID = B.MODEL_ID
+         and C.IMAGE_ID = D.ID
+       order by CREATE_DATE desc
+    ]]>
+  </query>
+
+  <query id='getFailure'>
+    <![CDATA[
+      select C.ID
+            ,C.FAILURE
+            ,C.CREATE_DATE
+            ,A.MODEL_ID AS MODEL_ID 
+            ,A.MODEL_NM AS NAME 
+            ,A.PROJECT_NO AS PRJ 
+            ,B.PLAN_STEP AS PHASE 
+            ,B.PLAN_SERIAL AS SERIAL 
+            ,D.ORIGINALFILENAME
+            ,D.SAVEDFILENAME
+            ,D.SAVEDPATH
+        from TB_RGT_MODEL_MST A, TB_RGT_PLAN B, TB_RGT_MOBILE_FAILURE C, TB_RGT_MOBILE_IMAGE D
+       where C.MODEL_ID = A.MODEL_ID 
+         and A.MODEL_ID = B.MODEL_ID
+         and C.IMAGE_ID = D.ID
+         and C.ID = #ID#
+    ]]>
+  </query>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <query id='getAccessLog'>
     <![CDATA[
       

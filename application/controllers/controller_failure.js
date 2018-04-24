@@ -3,16 +3,17 @@ var failureService = require( require("path").join( process.cwd(), "application"
 
 
 
-exports.control_view_content = function( req, res, connection ){
-	// return new Promise( function(resolve, reject){
-	// 	imageService.imageUpload( req, res, connection )
-	// 	.then( function(results){
-	// 		resolve( results );
-	// 	} )
-	// 	.catch( function(err){
-	// 		reject( err );
-	// 	} );
-	// } );
+exports.control_load = function( req, res, connection ){
+	return new Promise( function(resolve, reject){
+		
+		failureService.getModelList( req, res, connection )
+		.then( function( results ){
+			resolve( {"models" : results} );
+		} )
+		.catch( function(err){
+			reject( err );
+		} );
+	} );
 }
 
 exports.control_save_failure = function( req, res, connection ){
@@ -24,5 +25,29 @@ exports.control_save_failure = function( req, res, connection ){
 		.catch( function(err){
 			reject( err );
 		} )
+	} );
+}
+
+exports.control_list_failure = function( req, res, connection ){
+	return new Promise( function( resolve, reject ){
+		failureService.getFailureList( req, res, connection )
+		.then( function( results ){
+			resolve( {"failures" : results} );
+		} )
+		.catch( function(err){
+			reject( err );
+		} );
+	} );
+}
+
+exports.control_view_failure = function( req, res, connection ){
+	return new Promise( function( resolve, reject ){
+		failureService.getFailure( req, res, connection )
+		.then( function( results ){
+			resolve( {"failure" : results} );
+		} )
+		.catch( function(err){
+			reject( err );
+		} );
 	} );
 }
