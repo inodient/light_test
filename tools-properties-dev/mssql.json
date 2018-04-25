@@ -1,8 +1,8 @@
 {
-	"user": "usrCERND",
-	"password": "******",
-	"server": "DIOPRDB01",
-	"database": "Front2007",
+	"user": "Engdbdev",
+	"password": "Eng@0987",
+	"server": "DIWIN262",
+	"database": "engpdev",
 	"queries" : [
 		"/tools-submodules-dev/db/queries/rgt_query.xml"
 	]

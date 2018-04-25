@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
+
+
+	
+
+	
+	<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+	<meta charset="utf-8">
+	<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<style>
+		a, a:focus, a:active, a:hover {
+			text-decoration: none;
+		}
+
+		.row {
+			background-color: #328893; 
+			color: #ededed;
+			border-bottom: 1px solid #328893;
+			padding: 10px;
+		}
+
+		.content-header {
+			padding: 0px 10px 0px 10px;
+			font-size: 1.25rem;
+			text-align: center;
+			color: white;
+			background-color: #328893;
+		}
+
+		.content-header .row {
+			margin: auto;
+			max-width: 1000px;
+		}
+
+		.content-header .left-nav {
+			padding-left: 0;
+			text-align: left;
+		}
+
+		.content-header .right-nav {
+			padding-right: 0;
+			text-align: right;
+		}
+
+		.content-header a {
+			font-size: 1.25rem;
+			color: white;
+			text-decoration: none;
+		}
+
+		.content-header a:hover {
+			font-weight: 700;
+			text-decoration: none;
+		}	
+
+		.user {
+			text-align: left;
+		}
+
+		.user a {
+			text-decoration: none;
+			color: #ededed;
+		}
+
+		.title {
+			text-align: center;
+		}
+
+		.logout {
+			text-align: right;			
+		}
+
+		.logout a {
+			text-decoration: none;
+			color: #ededed;
+		}
+
+		.content-body {
+			margin-top: 80px;
+			min-height: 85vh;
+			background-color: white;
+			padding-bottom: 80px;
+		}
+
+		.content-body article {
+			/*margin-top: 30px;*/
+			/*margin-bottom: 80px;*/
+			max-width: 1000px;
+			padding: 10px;
+			/*margin: auto;*/
+		}
+
+		.content-body article img {
+			max-width: 100%;
+			margin-bottom: 10px;
+			/*padding: 50px 25px 15px 25px;*/
+		}
+
+		.content-body table *, .content-body .table-responsive, .content-body .table-responsive * {
+			color: #04313a;
+			border: 0px;
+		}
+
+		.before-line::before {
+			box-sizing: inherit;
+			vertical-align: middle;
+			display: inline-block;
+			content: '';
+			width: 2.5rem;
+			margin-right: .5rem;
+			height: 1px;
+			background: #04313a;
+		}
+
+		.btn-view {
+			background-color: #376173;
+			color: white;
+			font-weight: 700;
+			margin-left: +8px;
+			padding: 15px 15px 15px 15px;
+		}
+
+
+
+		.back-to-top {
+			position: fixed;
+			bottom: 3.5rem;
+			right: 3rem;
+			font-size: 1.5rem;
+			display: inline-block;
+			transition: all 2 ease;
+		}
+
+		.back-to-top:hover {
+			text-decoration: none;
+		}
+
+		.back-to-top:focus {
+			text-decoration: none;
+		}
+
+		.back-to-top:after {
+			content: 'Top';
+			font-size: 1rem;
+			line-height: 1;
+			display: block;
+			color: white;
+			background: rgba(44, 47, 48, 0.5);
+			padding: 1rem;
+			transition: all .2s ease;
+		}
+
+
+
+
+
+
+		.navbar-toggle {
+			border: 1px solid #328893;
+			padding: 4px;
+			margin-right: 0px;
+		}
+
+		.icon-bar {
+			background-color: white;
+		}
+
+		.navbar-item a {
+			text-decoration: none;
+			color: #04313a;
+		}
+
+		.navbar-item.active {
+			font-weight: 800;
+		}
+
+		
+
+
+
+		.machine-list {
+			width: 100%; 
+			border: 1px solid lightgray !important;
+			text-align: center;
+			font-size: 1.25rem;
+		}
+
+		.machine-list tr {
+			border: 1px solid lightgray !important;
+		}
+
+		.machine-list td {
+			border: 1px solid lightgray !important;
+		}
+
+		.td-title {
+			width: 20%;
+			font-weight: bold;
+			background-color: #f3f8f8;
+		}
+
+
+		.assign-button-group {
+			text-align: right;
+			margin-bottom: 20px;
+		}
+
+		.assign-button-group input[type=button] {
+			background-color: #296f79;
+			border: 0;
+			outline: none;
+			color: white;
+			font-size: 1.25rem;
+			font-weight: 700;
+			padding: 8px;
+			border-radius: 0;
+		}
+
+		.assign-button-group input[type=button]:hover {
+			background-color: #5b949b;
+		}
+
+		.before-line::before {
+			box-sizing: inherit;
+			vertical-align: middle;
+			display: inline-block;
+			content: '';
+			width: 2.5rem;
+			margin-right: .5rem;
+			height: 1px;
+			background: #04313a;
+		}
+
+		.machine-title {
+			font-weight: 700;
+			color: #04313a;
+			padding-bottom: 1.1rem;
+		}
+
+
+	</style>
+
+	<script>
+    	$(document).ready( function(){
+    		$('.navbar-toggle').click(function(e) {
+		      e.preventDefault();
+		      $('.site-nav').slideToggle(180, "linear");
+		    });
+
+		    $("#sign-out").on( "click", function(){
+		    	$(location).attr( "href", "/" );
+		    } );
+
+		    $(".btn-assign").on( "click", function(){
+		    	alert( $(this).data("id") );
+		    	$(location).attr( "href", "/assign/" + $(this).data("id") );
+		    } );
+    	} );
+    </script>
+
+
+
+	<title>RGT MOBILE</title>
+</head>
+<body>
+		<nav class="navbar navbar-fixed-top" style="background-color: #328893">
+		  <div class="container-fluid">
+		    <div class="navbar-header">
+		      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" style="float: left; margin-left: 8px">
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span> 
+		      </button>
+		      <button type="button" class="navbar-toggle" id="sign-out" style="color: white; float:right; margin-right: 8px">
+	            Sign Out&nbsp;&nbsp;<span class="glyphicon glyphicon-log-out"></span>
+        		</button>
+		    </div>
+		    <div class="collapse navbar-collapse" id="myNavbar" style="background-color: white; color: #04313a">
+		      <ul class="nav navbar-nav">
+		        <li class="navbar-item"><a href="/list" class="site-nav-menu" id="1" name="List" data-href="/list">List</a></li>
+	          	<li class="navbar-item"><a href="/assign" class="site-nav-menu" id="1" name="Assign Failure" data-href="/assign">Assign Failure</a></li>
+	          	<li class="navbar-item active"><a href="/machine" class="site-nav-menu" id="1" name="Machine Info" data-href="/machine">Machine Info</a></li>
+		      </ul>
+		      <ul class="nav navbar-nav navbar-right">
+		      	<li class="navbar-item"><a href="/setting" class="site-nav-menu" id="1" name="Setting" data-href="/setting">Setting</a></li>
+		        <!-- <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li> -->
+		      </ul>
+		    </div>
+		  </div>
+		</nav>
+	    
+
+	<div class="container-fluid">
+		
+		<div class="row content-body">
+			
+			<% for( var i=0; i<machines.length; i++ ){ %>
+				<% var machine = machines[i] %>
+
+				<article>
+					<div class="machine-title before-line">
+						<%- machine.NAME %>
+					</div>
+					<table class="table table-responsive table-bordered machine-list">
+						<tbody>
+							<!-- <tr>
+								<td class="td-title">NAME</td>
+								<td colspan=3 class="td-content">
+									<span><%- machine.NAME %></span>
+								</td>
+							</tr> -->
+
+							<tr>
+								<td class="td-title">ID</td>
+								<td colspan=3 class="td-content">
+									<span><%- machine.ID %></span>
+								</td>
+							</tr>
+							<tr>
+								<td class="td-title">PRJ NO</td>
+								<td colspan=3 class="td-content">
+									<span><%- machine.PRJ %></span>
+								</td>
+							</tr>
+							<tr>
+								<td class="td-title">PHASE</td>
+								<td class="td-content">
+									<span><%- machine.PHASE %></span>
+								</td>
+								<td class="td-title">SERIAL</td>
+								<td class="td-content">
+									<span><%- machine.SERIAL %></span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<div class="assign-button-group">
+						<input style="width: 100%" type="button" value="ASSIGN FAILURE" class="btn-assign" data-id="<%- machine.ID %>"/>
+					</div>
+
+				</article>
+			<% } %>
+
+		</div>
+
+		<div class="row content-footer" style="text-align:center; padding-top:2rem">
+			<div>
+				<p style="font-size: 1.5rem;" >
+					Copyright(c) 2018 Doosan I&C<br>
+					Beta-Test Version - v.0.0.1
+				</p>
+			</div>
+		</div>
+
+	</div>
+	
+</body>
+</html>

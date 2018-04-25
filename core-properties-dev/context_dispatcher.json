@@ -25,6 +25,14 @@
             "view": "assign.ejs"    
         },
         {
+            "id": "assignWithTarget",
+            "path": "/assign/:target",
+            "controllerJS": "controller_failure.js",
+            "controlFunction": "control_load_w_machine",
+            "viewPath": "",
+            "view": "assign.ejs"    
+        },
+        {
             "id": "list",
             "path": "/list",
             "controllerJS": "controller_failure.js",
@@ -39,6 +47,22 @@
             "controlFunction": "control_view_failure",
             "viewPath": "",
             "view": "failure.ejs"
+        },
+        {
+            "id": "machine",
+            "path": "/machine",
+            "controllerJS": "controller_machine.js",
+            "controlFunction": "control_list_machine",
+            "viewPath": "",
+            "view": "machine.ejs"
+        },
+        {
+            "id": "setting",
+            "path": "/setting",
+            "controllerJS": "controller_machine.js",
+            "controlFunction": "control_list_machine",
+            "viewPath": "",
+            "view": "setting.ejs"
         }
     ],
     "POST": [

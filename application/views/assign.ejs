@@ -188,7 +188,7 @@
 
 				imageUploadAjax( data )
 				.then( function( result ){
-					alert( "IMAGED UPLOADED..." );
+					alert( "Failure Image Uploaded" );
 					$("#failure-image").attr( "src", "/" + result.savedFileName );
 				} )
 				.catch( function(err){
@@ -240,8 +240,13 @@
 					data: $("#failure-form").serialize(),
 
 					success: function( data ){
-						alert( "SAVE SUCCEED" );
-						$(location).attr( "href", "/list" );
+						if( confirm( "Save Completed.\nDo you want to assign another failures with the current selected model?" ) ){
+							
+							$(location).attr( "href", "/assign/" + $("#input-model-id").val() );
+						} else{
+							$(location).attr( "href", "/list" );
+						}
+						
 					}
 				}
 
@@ -319,12 +324,29 @@
 								<% for( var i=0; i<models.length; i++ ){ %>
 
 									<% var model = models[i] %>
-									<option value="<%- model.NAME %>" data-id="<%- model.ID %>" data-project="<%- model.PRJ %>" data-phase="<%- model.PHASE %>" data-serial="<%- model.SERIAL %>" ><%- model.NAME %></option>
+
+									<% if( typeof machineId != "undefined" && model.ID === machineId ){ %> 
+										<option value="<%- model.NAME %>" data-id="<%- model.ID %>" data-project="<%- model.PRJ %>" data-phase="<%- model.PHASE %>" data-serial="<%- model.SERIAL %>" selected><%- model.NAME %></option>
+									<% } else{ %>
+										<option value="<%- model.NAME %>" data-id="<%- model.ID %>" data-project="<%- model.PRJ %>" data-phase="<%- model.PHASE %>" data-serial="<%- model.SERIAL %>" ><%- model.NAME %></option>
+									<% } %>
+
 								<% } %>
 							</select>
 
 							<script>
+								// $(document).on( "load", function(){
+								// 	$(".model-selector").data("id").prop("selected", true);
+								// } );
+
 								$(document).ready( function(){
+									$(".model-selector option:selected").each( function(){
+											$("#input-model-id").val( $(this).data("id") );
+											$("#input-model-project").val( $(this).data("project") );
+											$("#input-model-phase").val( $(this).data("phase") );
+											$("#input-model-serial").val( $(this).data("serial") );
+									} );
+
 									$(".model-selector").on( "change", function(){
 
 										$(".model-selector option:selected").each( function(){
@@ -414,7 +436,7 @@
 					</tr>
 					<tr>
 						<td colspan=2>
-							<img src="/default.jpg" id="failure-image">
+							<img src="/default.png" id="failure-image">
 						</td>
 					</tr>
 					<tr>

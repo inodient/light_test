@@ -16,6 +16,21 @@ exports.control_load = function( req, res, connection ){
 	} );
 }
 
+exports.control_load_w_machine = function( req, res, connection ){
+	return new Promise( function(resolve, reject){
+
+		var machineId = req.params.target;
+
+		failureService.getModelList( req, res, connection )
+		.then( function( results ){
+			resolve( {"models" : results, "machineId" : machineId} );
+		} )
+		.catch( function(err){
+			reject( err );
+		} );
+	} );
+}
+
 exports.control_save_failure = function( req, res, connection ){
 	return new Promise( function( resolve, reject ){
 		failureService.saveFailure( req, res, connection )

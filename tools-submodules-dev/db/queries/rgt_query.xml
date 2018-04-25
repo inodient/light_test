@@ -56,6 +56,20 @@
     ]]>
   </query>
 
+  <query id="getModelInfoList">
+    <![CDATA[
+      select 
+             A.MODEL_ID AS ID, 
+             A.MODEL_NM AS NAME, 
+             A.PROJECT_NO AS PRJ, 
+             B.PLAN_STEP AS PHASE, 
+             B.PLAN_SERIAL AS SERIAL 
+          from TB_RGT_MODEL_MST A, TB_RGT_PLAN B
+         where A.MODEL_ID = B.MODEL_ID
+         order by A.CREATION_DATE desc;
+    ]]>
+  </query>
+
   <query id='insertImageInfo'>
     <![CDATA[
       INSERT INTO TB_RGT_MOBILE_IMAGE
