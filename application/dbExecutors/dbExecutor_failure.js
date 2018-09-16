@@ -74,3 +74,26 @@ exports.insertFailure = function( failureInfo, connection ){
 		} );
 	} );
 }
+
+exports.deleteFailure = function( failureInfo, connection ){
+	return new Promise( function(resolve, reject){
+
+		var _current = new Date();
+		var current = _current.toISOString();
+
+		var params = [];
+		var queryId = "deleteFailure"
+		params.push( {"ID": failureInfo.targetId } );
+
+		logger.debug( failureInfo.targetId );
+
+		mssqlHandler.executeQuery( queryId, params, connection.mssqlConnection )
+		.then( function(queryResults){
+			resolve( queryResults );
+		} )
+		.catch( function(err){
+			logger.error( err );
+			reject( err );
+		} );
+	} );
+}

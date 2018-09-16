@@ -66,3 +66,16 @@ exports.control_view_failure = function( req, res, connection ){
 		} );
 	} );
 }
+
+exports.control_del_failure = function( req, res, connection ){
+	return new Promise( function( resolve, reject ){
+
+		failureService.deleteFailure( req, res, connection )
+		.then( function( results ){
+			resolve( {} );
+		} )
+		.catch( function(err){
+			reject( err );
+		} );
+	} );	
+}

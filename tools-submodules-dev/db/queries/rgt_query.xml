@@ -137,6 +137,13 @@
     ]]>
   </query>
 
+  <query id='deleteFailure'>
+    <![CDATA[
+      delete from TB_RGT_MOBILE_FAILURE
+      where ID = #ID#
+    ]]>
+  </query>
+
 
   
 

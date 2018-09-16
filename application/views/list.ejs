@@ -187,6 +187,28 @@
 
 	<script>
     	$(document).ready( function(){
+
+    		// Login Session Check - Start
+    		var loginCheck = {
+    			type: "POST",
+    			url: "/authcheck",
+    			data: null,
+
+    			success: function(results){
+    				if( results && results === "E" ){
+    					alert( "You must login this system for assigning failures." );
+    					$(location).attr( "href", "/" );
+    				}
+    			},
+    			error: function(error){
+    				alert( "An error occured.\nPlease contact administrator." );
+    			}
+    		}
+
+    		$.ajax( loginCheck );
+    		// Login Session Check - End
+
+
     		$('.navbar-toggle').click(function(e) {
 		      e.preventDefault();
 		      $('.site-nav').slideToggle(180, "linear");
@@ -194,6 +216,31 @@
 
 		    $("#sign-out").on( "click", function(){
 		    	$(location).attr( "href", "/" );
+		    } );
+
+		    $(".btn-del").on( "click", function(){
+
+		    	if( confirm( "Are you sure to want to delete this failure?") ){
+		    		var targetId = $(this).data( "id");
+			    	var opt = {
+						type: "POST",
+						url: "/delfailure",
+						data: {targetId : targetId},
+
+						success: function( data ){
+							alert( "Deletion Failure Completed..." );
+
+							var articleId = "article_" + targetId;
+							$("#" + articleId).css( "display", "none" );
+
+						},
+						error: function(){
+							alert( "An error occured.\nPlease contact administrator." );
+						}
+					}
+
+					$.ajax( opt );
+		    	}
 		    } );
     	} );
     </script>
@@ -289,7 +336,7 @@
 			
 			<% for( var i=0; i<failures.length; i++ ){ %>
 				<% var failure = failures[i] %>
-				<article>
+				<article id="article_<%- failure.ID %>" data-article-id="<%- failure.ID %>">
 					<img src="<%- '/' + failure.SAVEDFILENAME %> ">
 					
 					<table class="table table-responsive" style="margin-bottom: 30px">
@@ -313,6 +360,7 @@
 
 					<div>
 						<a class="btn-view" href="/failure/<%- failure.ID %>">VIEW FAILURE</a>
+						<a class="btn-view btn-del" id="delete_failure_<%- failure.ID %>" data-id="<%-failure.ID %>">DELETE FAILURE</a>
 					</div>
 
 				</article>

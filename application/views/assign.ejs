@@ -162,6 +162,29 @@
 
 	<script>
 		$(document).ready( function(){
+
+			// Login Session Check - Start
+    		var loginCheck = {
+    			type: "POST",
+    			url: "/authcheck",
+    			data: null,
+
+    			success: function(results){
+    				if( results && results === "E" ){
+    					alert( "You must login this system for assigning failures." );
+    					$(location).attr( "href", "/" );
+    				}
+    			},
+    			error: function(error){
+    				alert( "An error occured.\nPlease contact administrator." );
+    			}
+    		}
+
+    		$.ajax( loginCheck );
+    		// Login Session Check - End
+
+
+			
 			$(document).on( "change", ":file", function(){
 				var input = $(this),
 					numFiles = input.get(0).files ? input.get(0).files.length : 1,
@@ -221,15 +244,18 @@
 
 
 			$("#btn-clear").on( "click", function(){
-				$("#input-model").val("");
-				$("#input-phase").val("");
-				$("#input-serial").val("");
-				$("#failure-image").val("");
+				$(".model-selector").val("");
+				$("#input-model-id").val("");
+				$("#input-model-project").val("");
+				$("#input-model-phase").val("");
+				$("#input-model-serial").val("");
+				$("#input-imagename").val("");
+				$("#failure-image").attr( "src", "/default.png" );
 				$("#input-failure").val("");
 			} );
 
 			$("#btn-cancle").on( "click", function(){
-				$(location).attr( "href", "/index" );
+				$(location).attr( "href", "/list" );
 			} );
 
 			$("#btn-submit").on( "click", function(){
@@ -421,7 +447,7 @@
 						<td>
 							<form id="uploadForm" class="form-inline" encrypt="multipart/form-data">
 								<div class="input-group">
-									<input type="text" name="input-imagename" class="form-control" placeholder="File Name" readonly>
+									<input type="text" name="input-imagename" id="input-imagename" class="form-control" placeholder="File Name" readonly>
 									<label class="input-group-btn">
 					                    <span id="image-group" class="btn btn-default">
 					                        Submit <input type="file" style="display: none;" name="uploadFileForm" id="uploadFileForm" multiple>

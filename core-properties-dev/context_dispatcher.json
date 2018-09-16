@@ -102,9 +102,17 @@
             "id": "authcheck",
             "path": "/authcheck",
             "controllerJS": "controller_auth.js",
-            "controlFunction": "control_auth",
+            "controlFunction": "control_authcheck",
             "viewPath": "",
             "view": "main.ejs"
+        },
+        {
+            "id": "delfailure",
+            "path": "/delfailure",
+            "controllerJS": "controller_failure.js",
+            "controlFunction": "control_del_failure",
+            "viewPath": "",
+            "view": "list.ejs"  
         }
     ]
 }

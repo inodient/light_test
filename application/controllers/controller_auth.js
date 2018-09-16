@@ -28,3 +28,21 @@ exports.control_auth = function( req, res, connection ){
 		} )
 	} );
 }
+
+exports.control_authcheck = function( req, res, connection ){
+	return new Promise( function(resolve, reject){
+		
+		var connHandler = new connectionHandler( req, res );
+		connHandler.getSession( "username", function(results){
+
+			logger.debug( "Loged On?", results );
+
+			if( results ){
+				resolve( "S" );
+			} else{
+				resolve( "E" );
+			}
+		} );
+
+	} );
+}

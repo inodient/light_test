@@ -11,7 +11,12 @@ exports.control = function( req, res ){
     setModel( req, res )
     .then( function(model){
 
-      resolve( model );
+      var connHandler = new connectionHandler( req, res );
+
+      connHandler.destroySession();
+      connHandler.getSession( "username", function(results){
+        resolve( {} );
+      } );
     } )
     .catch( function(err){
       reject( err );

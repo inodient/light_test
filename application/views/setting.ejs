@@ -254,6 +254,28 @@
 
 	<script>
     	$(document).ready( function(){
+
+    		// Login Session Check - Start
+    		var loginCheck = {
+    			type: "POST",
+    			url: "/authcheck",
+    			data: null,
+
+    			success: function(results){
+    				if( results && results === "E" ){
+    					alert( "You must login this system for assigning failures." );
+    					$(location).attr( "href", "/" );
+    				}
+    			},
+    			error: function(error){
+    				alert( "An error occured.\nPlease contact administrator." );
+    			}
+    		}
+
+    		$.ajax( loginCheck );
+    		// Login Session Check - End
+
+    		
     		$('.navbar-toggle').click(function(e) {
 		      e.preventDefault();
 		      $('.site-nav').slideToggle(180, "linear");

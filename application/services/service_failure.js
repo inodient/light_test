@@ -68,3 +68,16 @@ exports.saveFailure = function( req, res, connection ){
 	} );
 }
 
+exports.deleteFailure = function( req, res, connection ){
+	return new Promise( function( resolve, reject ){
+
+		failureDbExecutor.deleteFailure( req.body, connection )
+		.then( function( results ){
+			// logger.debug( results );
+			resolve( {} );
+		} )
+		.catch( function(err){
+			reject( err );
+		} );
+	} );
+}

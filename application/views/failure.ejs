@@ -164,8 +164,53 @@
 
 	<script>
 		$(document).ready( function(){
+
+
+			// Login Session Check - Start
+    		var loginCheck = {
+    			type: "POST",
+    			url: "/authcheck",
+    			data: null,
+
+    			success: function(results){
+    				if( results && results === "E" ){
+    					alert( "You must login this system for assigning failures." );
+    					$(location).attr( "href", "/" );
+    				}
+    			},
+    			error: function(error){
+    				alert( "An error occured.\nPlease contact administrator." );
+    			}
+    		}
+
+    		$.ajax( loginCheck );
+    		// Login Session Check - End
+
+
+			
 			$("#btn-list").on( "click", function(){
 				$(location).attr( "href", "/list" );
+			} );
+
+			$("#btn-del").on( "click", function(){
+				if( confirm( "Are you sure to want to delete this failure?") ){
+		    		var targetId = $(this).data( "failure-id");
+
+			    	var opt = {
+						type: "POST",
+						url: "/delfailure",
+						data: {targetId : targetId},
+
+						success: function( data ){
+							$(location).attr( "href", "/list" );
+						},
+						error: function(){
+							alert( "An error occured.\nPlease contact administrator." );
+						}
+					}
+
+					$.ajax( opt );
+		    	}
 			} );
 
 			$("#sign-out").on( "click", function(){
@@ -222,7 +267,7 @@
 	</nav>
 
 	<form id="failure-form" class="failure-form" name="failure-form" method="post" action="/savefailure
-	">
+	" data-failure-id="<%- failure.ID %>">
 		
 		<div class="container-fluid">
 			<table class="table table-responsive table-bordered" style="margin-bottom: 35px">
@@ -235,7 +280,7 @@
 					</tr>
 
 					<tr>
-						<td class="td-title">ID</td>
+						<td class="td-title">MODEL ID</td>
 						<td class="td-content">
 							<span><%- failure.NAME %></span>
 						</td>
@@ -279,8 +324,9 @@
 			</table>
 		</div>
 
-		<div class="container-fluid assign-button-group">
-			<input style="width: 100%" type="button" value="BACK TO LIST" id="btn-list" />
+		<div class="container-fluid assign-button-group" style="text-align:center">
+			<input style="width: 48%" type="button" value="DELETE" id="btn-del" data-failure-id="<%- failure.ID %>" />
+			<input style="width: 48%" type="button" value="BACK TO LIST" id="btn-list" />
 		</div>
 	</form>
 

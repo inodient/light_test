@@ -27,14 +27,22 @@ exports.authenticate = function( req, res, connection ){
 		  if(auth) {
 		    logger.debug('Authenticated!');
 
-		    loginDbExecutor.getUserInfo( username, connection )
-		    .then( function( userinfo ){
-		    	resolve( {"status" : "S", "message" : "Authentication Completed...", "userinfo":userinfo.results} );
-		    } )
-		    .catch( function(err){
-		    	logger.error( err );
-		    	reject( err );
+		    var connHandler = new connectionHandler( req, res );
+
+		    connHandler.setSession( "username", username );
+
+		    connHandler.getSession( "username", function(results){
+		    	loginDbExecutor.getUserInfo( username, connection )
+			    .then( function( userinfo ){
+			    	resolve( {"status" : "S", "message" : "Authentication Completed...", "userinfo":userinfo.results} );
+			    } )
+			    .catch( function(err){
+			    	logger.error( err );
+			    	reject( err );
+			    } );
+
 		    } );
+
 		  } else {
 		    logger.debug('Authentication failed!');
 		    reject( {"status" : "E", "message" : "Authentication failed!"} );
